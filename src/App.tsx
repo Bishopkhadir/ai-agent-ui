@@ -42,44 +42,66 @@ function App() {
     }
   };
 
-  return (
-    <div className="chat-app">
-      <header>
-        <h1>🤖 AI Agent</h1>
-        <p>Powered by Groq + Llama</p>
+   return (
+    <div className="chat-app d-flex flex-column vh-100">
+      <header className="bg-dark text-center py-3 border-bottom border-secondary">
+        <h1 className="h4 text-info mb-0">🤖 AI Agent</h1>
+        <p className="small text-secondary mb-0">Powered by Groq + Llama</p>
       </header>
 
-      <div className="messages">
+      <div className="messages flex-grow-1 overflow-auto p-3 d-flex flex-column gap-2">
         {messages.length === 0 && (
-          <div className="empty">
+          <div className="text-center text-secondary mt-5">
             <p>Ask me anything!</p>
-            <p className="hint">Try: "What time is it?" or "What's 156 × 34?"</p>
+            <p className="small">Try: "What time is it?" or "What's 156 × 34?"</p>
           </div>
         )}
 
         {messages.map((msg, i) => (
-          <div key={i} className={`message ${msg.role}`}>
-            <div className="bubble">{msg.content}</div>
+          <div
+            key={i}
+            className={`d-flex ${msg.role === 'user' ? 'justify-content-end' : 'justify-content-start'}`}
+          >
+            <div
+              className={`p-2 px-3 rounded-4 ${
+                msg.role === 'user'
+                  ? 'bg-info text-dark'
+                  : 'bg-secondary text-light'
+              }`}
+              style={{ maxWidth: '85%', wordWrap: 'break-word' }}
+            >
+              {msg.content}
+            </div>
           </div>
         ))}
 
         {loading && (
-          <div className="message assistant">
-            <div className="bubble typing">Thinking...</div>
+          <div className="d-flex justify-content-start">
+            <div className="p-2 px-3 rounded-4 bg-secondary text-light fst-italic">
+              Thinking...
+            </div>
           </div>
         )}
 
         <div ref={bottomRef} />
       </div>
 
-      <form onSubmit={sendMessage} className="input-area">
+      <form
+        onSubmit={sendMessage}
+        className="d-flex gap-2 p-3 bg-dark border-top border-secondary"
+      >
         <input
+          className="form-control"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder="Type a message..."
           disabled={loading}
         />
-        <button type="submit" disabled={loading || !input.trim()}>
+        <button
+          type="submit"
+          className="btn btn-info text-dark fw-bold"
+          disabled={loading || !input.trim()}
+        >
           Send
         </button>
       </form>
