@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, type FormEvent } from 'react';
 import axios from 'axios';
 import './App.css';
 
-const API = 'https://ai-agent-api-6v1a.onrender.com/';
+const API = 'https://ai-agent-api-6v1a.onrender.com';
 
 interface Message {
   role: 'user' | 'assistant';
